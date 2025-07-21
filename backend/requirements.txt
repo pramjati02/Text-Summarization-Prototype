@@ -1,0 +1,6 @@
+fastapi[standard]
+transformers
+python-multipart
+pydantic
+aiofiles
+torch
