@@ -1,1 +1,13 @@
-Some model training and testing scripts may have forward passes with "autocast()". This is a method called Mixed Precision, which reduces some of the forward pass calculations from 32float to 16float, making them more efficient in training. This did not work for T5 and PEGASUS, and have been removed in the current iteration of training models (which are still training). Updated model scripts will be uploaded once training has been finalized. 
+prototype-version-one
+Files for text summarization prototype. Developed using FastAPI for backend and REACT for frontend.
+
+Backend is missing the transformer folders containing the model and tokenizers.
+
+Frontend is missing the node_modules folder from CRA and some json package files. More information in the frontend README.
+=======
+Files for text summarization prototype. Developed using FastAPI for backend and REACT for frontend.
+
+Backend is missing the transformer folders containing the model and tokenizers.
+
+Frontend is missing the node_modules folder from CRA and some json package files. More information in the frontend README.
+main
