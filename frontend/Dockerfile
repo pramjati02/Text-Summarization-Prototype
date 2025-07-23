@@ -2,11 +2,13 @@
 FROM node:18-alpine AS build
 
 WORKDIR /app
-COPY . . 
 
-# install dependencies and build 
+# Install dependencies 
+COPY package*.json ./
 RUN npm install
-RUN npm run build 
+
+COPY . .
+RUN npm run build
 
 # serve using a minimal nginx image
 FROM nginx:alpine
