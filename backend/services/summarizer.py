@@ -1,9 +1,24 @@
 from models.summarizer_models import model, tokenizer
 import torch
+import fitz # for pdf file upload and extraction
+import re
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+def preprocess_text(text: str) -> str:
+    # lowercase text
+    text = text.lower()
+    
+    # preserve contractions such as don't, can't etc.
+    text = re.sub(r"(?!\b\w*'\w*\b)([^\w\s'])", r' \1 ', text)
+    
+    # Collapse multiple spaces 
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    return text 
+
 def summarize_text(text:str) -> str:
+    text = preprocess_text(text)
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=1024).to(device)
     summary_ids = model.generate(inputs["input_ids"], 
                                  max_length=256, 
@@ -14,10 +29,15 @@ def summarize_text(text:str) -> str:
                                  )
     return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
-"""
+# extract text from a given uploaded pdf file 
+def extract_text_pdf(file_bytes: bytes) -> str:
+    with fitz.open(stream=file_bytes, filetype="pdf") as doc:
+        return " ".join([page.get_text() for page in doc])
 
 async def summarize_uploaded_file(file) -> str:
     contents = await file.read()
-    return summarize_text(contents.decode("utf-8"))
+    text = extract_text_pdf(contents)
+    summary = summarize_text(text)
+    #print("Summary:", summary)
+    return summary
     
-"""
