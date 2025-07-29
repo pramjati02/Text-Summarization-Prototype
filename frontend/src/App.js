@@ -43,7 +43,7 @@ function App() {
 
   return (
     <div style={{ padding: '2rem', maxWidth: '600px', margin: 'auto' }}>
-      <h1>PDF Summarizer</h1>
+      <h1>PDF Text Summarizer</h1>
 
       {/* PDF Upload */}
       <input type="file" accept="application/pdf" onChange={handleFileSelect} />
