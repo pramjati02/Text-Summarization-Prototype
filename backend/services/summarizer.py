@@ -17,6 +17,23 @@ def preprocess_text(text: str) -> str:
     
     return text 
 
+def capitalize_sentences(text: str) -> str:
+    # Split by sentence boundaries (.!?), keeping the punctuation
+    sentences = re.split(r'([.!?])', text)
+    
+    # Reconstruct sentences with capitalization
+    capitalized = []
+    for i in range(0, len(sentences) - 1, 2):
+        sentence = sentences[i].strip().capitalize()
+        punctuation = sentences[i+1]
+        capitalized.append(sentence + punctuation)
+    
+    # Handle possible trailing text
+    if len(sentences) % 2 != 0:
+        capitalized.append(sentences[-1].strip().capitalize())
+
+    return ' '.join(capitalized)
+
 def summarize_text(text:str) -> str:
     text = preprocess_text(text)
     inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=1024).to(device)
@@ -37,7 +54,8 @@ def extract_text_pdf(file_bytes: bytes) -> str:
 async def summarize_uploaded_file(file) -> str:
     contents = await file.read()
     text = extract_text_pdf(contents)
-    summary = summarize_text(text)
+    text_summary = summarize_text(text)
     #print("Summary:", summary)
+    summary = capitalize_sentences(text_summary)
     return summary
     
