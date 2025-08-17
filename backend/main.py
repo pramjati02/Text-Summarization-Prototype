@@ -6,9 +6,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-app.include_router(summarize.router, prefix="/api/v1/summarize", tags=["Summarization"])
+app.include_router(summarize.router, prefix="/api/v1/upload", tags=["Summarization"])

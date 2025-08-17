@@ -3,4 +3,6 @@ transformers
 python-multipart
 pydantic
 aiofiles
-torch
+torch --index-url https://download.pytorch.org/whl/cu124
+PyMuPDF
+nltk
