@@ -9,7 +9,7 @@ def preprocess_text(text: str) -> str:
     # lowercase text
     text = text.lower()
     
-    # preserve contractions such as don't, can't etc.
+    # add a space between punctuation and special character except contractions such as don't, can't etc.
     text = re.sub(r"(?!\b\w*'\w*\b)([^\w\s'])", r' \1 ', text)
     
     # Collapse multiple spaces 
@@ -18,17 +18,17 @@ def preprocess_text(text: str) -> str:
     return text 
 
 def capitalize_sentences(text: str) -> str:
-    # Split by sentence boundaries (.!?), keeping the punctuation
+    # Split by sentence boundaries (.!?) keeping the punctuation
     sentences = re.split(r'([.!?])', text)
     
-    # Reconstruct sentences with capitalization
+    # capitalizing sentences for reconstruction 
     capitalized = []
     for i in range(0, len(sentences) - 1, 2):
         sentence = sentences[i].strip().capitalize()
         punctuation = sentences[i+1]
         capitalized.append(sentence + punctuation)
     
-    # Handle possible trailing text
+    # if the last sentence is a trailing text (has no punctuation after), capitalize it
     if len(sentences) % 2 != 0:
         capitalized.append(sentences[-1].strip().capitalize())
 
