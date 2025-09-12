@@ -1,13 +1,13 @@
-# Build + run React app in one container
+# Build and run React app in one container
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Install dependencies first (better caching)
+# install dependenies
 COPY package*.json ./
 RUN npm install
 
-# Copy the env file for Docker (build-time env for React)
+# copy the env file for Docker
 COPY .env.compose .env
 
 # Copy source code
