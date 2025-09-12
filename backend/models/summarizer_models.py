@@ -1,13 +1,6 @@
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch
 
-"""
-# Check if torch is using cuda 
-print("CUDA available:", torch.cuda.is_available())
-if torch.cuda.is_available():
-    print("CUDA device name:", torch.cuda.get_device_name(0))
-"""
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer_bart = AutoTokenizer.from_pretrained("./models/bart_base_trained")
